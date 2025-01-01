@@ -1,4 +1,5 @@
 import random
+import time
 playOn = True
 while playOn:
     print(
@@ -36,16 +37,31 @@ while playOn:
     actual_num = random.randint(1,100)
     #print(actual_num)
 
-    #Checking if guess is accurate ans 
+    #Checking if guess is correct
+    attempt_num = 0
+    start_time = time.time()
+    
     for num in range(0,lives) :
         guess = int(input("Enter your guess: "))
-
+        attempt_num += 1
         if guess == actual_num :
-            print("Congratualtions! You guessed the right number")
+            playOn = False
+            end_time = time.time()
+            actual_time = round(end_time - start_time)
+            print(f"Congratulations! You guessed the right number in {attempt_num} attempts in {actual_time} seconds")
+            break
+            
         else :
             lives -= 1
             print("You guessed wrong!")
+            if guess > actual_num :
+                print(f"Number is less than {guess}")
+            else :
+                print(f"Number is greater than {guess}")
             if lives == 0 :
-                print("Tsk Tsk!\nYou ran out of lives!\nYou might wanna try again")
-                playOn = False
-
+               playAgain = input("Tsk Tsk!\nYou ran out of lives!\nYou might wanna try again. Would you like to? (Y/N)").lower()
+               if playAgain == 'y' :
+                   playOn = True
+               else :
+                   playOn = False
+                   print("GaMe OvErRrRr")
